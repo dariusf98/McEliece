@@ -7,7 +7,7 @@ import csv
 
 ###### Helper Functions #######
 def genSMatrix(k):
-    """Generates an invertable matrix k * k"""
+    """Generates an invertible matrix k * k"""
     sMaybe = np.matrix(np.random.randint(0, 2, k * k).reshape(k, k).astype(int))
     while True:
         try:
@@ -111,7 +111,7 @@ class privateKeyH84:
     """Datastructure to represent our Private Key"""
 
     def __init__(self, S=None, P=None):
-        """Initalizer that will set S & P matricies to random if not given values"""
+        """Initializer that will set S & P matrices to random if not given values"""
         # Hamming 8,4 in standard
         self.G = np.matrix([
             [1, 0, 0, 0, 0, 1, 1, 1],
@@ -162,7 +162,7 @@ class privateKeyH84:
             exit(1)
 
     def makeGPrime(self):
-        """Creates the GPrime encrytion Matrix"""
+        """Creates the GPrime encryption Matrix"""
         return modTwo(self.S * self.G * self.P)
 
     def decrypt(self, c):
@@ -320,7 +320,7 @@ class publicKeyH84:
         mf.close()
 
     def dnaFileEncrypt(self, f, dlu):
-        """Takes a files, encypts it and represents it as a DNA codeword"""
+        """Takes a files, encrypts it and represents it as a DNA codeword"""
         cipherString = ""
 
         mf = open(f, "rb")
@@ -431,7 +431,7 @@ class privateKeyH1611:
     """Datastructure to represent our Private Key"""
 
     def __init__(self, S=None, P=None):
-        """Initalizer that will set S,P, random if not given values"""
+        """Initializer that will set S,P, random if not given values"""
         # Hamming 16,11 in standard
         self.G = np.matrix([
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
@@ -564,8 +564,8 @@ class lookupDNA():
         self.encLU = dict()
         self.decLU = dict()
 
-        dreader = csv.reader(open(decryptFile, 'r'))
-        for row in dreader:
+        dReader = csv.reader(open(decryptFile, 'r'))
+        for row in dReader:
             k, v = row
             self.decLU[k] = str(v)
 
@@ -574,17 +574,17 @@ class lookupDNA():
             k, v = row
             self.encLU[k] = str(v)
 
-    def lookDNAEncrypt(self, bstring):
+    def lookDNAEncrypt(self, bString):
         """Finds DNA sequence from 8 bits"""
         try:
-            return str(self.encLU[bstring])
+            return str(self.encLU[bString])
         except:
             return "?"
 
-    def lookDNADecrypt(self, bstring):
+    def lookDNADecrypt(self, bString):
         """Finds 8 bits from 8 characters of DNA"""
         try:
-            return str(self.decLU[bstring])
+            return str(self.decLU[bString])
         except:
             return "?"
 
